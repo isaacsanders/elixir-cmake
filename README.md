@@ -55,6 +55,38 @@ binary in `priv/` afterwards.
 
 ## Configuration Options
 
-    TODO
+There are a number of configuration options available a developer, options that
+are necessary for effective use of CMake.
+
+Compiler configuration is supplied in the Mix project file, `mix.exs`:
+
+```elixir
+def project do
+  [
+    # ...
+    cmake: [
+      build_flags: [
+        # Command Line Flags processed and passed to CMake in the form of
+        # "-D<variable>:<type>=<value"
+        {variable, type, value},
+        # or "-D<variable>=<value>".
+        {variable, value}
+      ]
+      install?: true # defaults to false
+    ],
+    # ...
+  ]
+end
+```
+
+Supported options include:
+
+- `build_flags`: This is a list of 2 or 3 element tuples that represet `-D`
+  flags passed to the `cmake` invocation.
+  - The 2 element form is `{variable, value}`, passed as strings.
+  - The 3 element form is `{variable, type, value}`, passed as strings.
+- `install?`: This is a boolean option. This indicates if the build artifacts
+  should be installed. This may be of interest to you if you plan to use an
+  in-source library and need the shared objects packaged with your release.
 
 Be sure to read [the documentation too](http://hexdocs.pm/elixir_cmake).
